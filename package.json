@@ -1,0 +1,26 @@
+{
+  "name": "mock-vendor-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "authentication": "node ./src/api/authentication.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fhyfirman/mock-vendor-api.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/fhyfirman/mock-vendor-api/issues"
+  },
+  "homepage": "https://github.com/fhyfirman/mock-vendor-api#readme",
+  "dependencies": {
+    "axios": "^1.3.5",
+    "crypto-js": "^4.1.1",
+    "dotenv": "^16.0.3"
+  }
+}
