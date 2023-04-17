@@ -3,11 +3,13 @@ require("dotenv").config();
 const axios = require("axios");
 const CryptoJS = require("crypto-js");
 
-const { API_KEY, API_SECRET_KEY, API_ENDPOINT, API_HTTP_METHOD } = process.env;
+const { API_KEY, API_SECRET_KEY, API_BASE_URL, API_ENDPOINT, API_HTTP_METHOD } =
+  process.env;
 
 const authTesting = async (
   apiKey,
   apiSecretKey,
+  apiBaseUrl,
   apiEndpoint,
   apiHttpMethod
 ) => {
@@ -21,7 +23,7 @@ const authTesting = async (
   let rawSignature = `${timestamp}\r\n${apiHttpMethod}\r\n${apiEndpoint}\r\n\r\n${body}`;
 
   if (apiHttpMethod === "GET") {
-    rawSignature = `${timestamp}\r\n${apiHttpMethod}\r\n${apiEndpoint}`;
+    rawSignature = `${timestamp}\r\n${apiHttpMethod}\r\n${apiEndpoint}\r\n\r\n`;
   }
 
   const signature = CryptoJS.HmacSHA256(rawSignature, apiSecretKey).toString();
@@ -30,7 +32,7 @@ const authTesting = async (
 
   const response = await axios({
     method: apiHttpMethod,
-    url: apiEndpoint,
+    url: `${apiBaseUrl}${apiEndpoint}`,
     headers: {
       Authorization: `hmac ${token}`,
     },
@@ -39,7 +41,13 @@ const authTesting = async (
   return response;
 };
 
-authTesting(API_KEY, API_SECRET_KEY, API_ENDPOINT, API_HTTP_METHOD)
+authTesting(
+  API_KEY,
+  API_SECRET_KEY,
+  API_BASE_URL,
+  API_ENDPOINT,
+  API_HTTP_METHOD
+)
   .then((res) => {
     console.log(`RESPONSE: ${res}`);
   })
